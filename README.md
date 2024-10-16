@@ -4,9 +4,9 @@ A jqvmap sample for africa and kenya. It can also be used as a replacement for j
 
 # Africa Thumbnail
 
-![thumbnail](assests/images/africa.PNG)
+![thumbnail](assets/images/africa.PNG)
 
 
 # Kenya Thumbnail
 
-![thumbnail](assests/images/kenya.PNG)
+![thumbnail](assets/images/kenya.PNG)
