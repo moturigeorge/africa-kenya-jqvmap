@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Africa and Kenya jqvmap</title>
+
+    <link href="assets/css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- jvectormap -->
+    <script type="text/javascript" src="assets/js/jqvmap.js"></script>
+    <script type="text/javascript" src="assets/js/africa_en.js"></script>
+    <script type="text/javascript" src="assets/js/kenya_en.js"></script>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+        background-color: #333;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+
+      .jqvmap-region {
+        cursor: default !important;
+      }
+
+      .map-pin {
+        width: 64px;
+        height: 50px;
+        position: absolute;
+        top: -25px;
+        left: -32px;
+        background-size: 32px 32px;
+        background-repeat: no-repeat;
+        text-align: center;
+        background-position: top center;
+        color: #888;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .map-pin span {
+        position: absolute;
+        top: -12px;
+        left: 60%;
+        padding: 1px 2px;
+        text-align: center;
+        background-color: orange;
+        border-radius: 2px;
+      }
+
+      .red {
+        background-image: url('assets/images/markers/black.png');
+      }
+
+      .blue {
+        background-image: url('assets/images/markers/blue.png');
+      }
+
+      .purple {
+        background-image: url('assets/images/markers/green.png');
+      }
+
+      /* Setup basic CSS for Label */
+      .jqvmap-pin {
+        font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+        cursor: default;
+      }
+
+      #jqvmap1_fl_pin {
+        margin-left: 5%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map-container">
+      <div id="map" style="min-height: 620px;"></div>
+    </div>
+
+    <div id="map-container">
+      <div id="kemap" style="min-height: 620px;"></div>
+    </div>
+
+    <script>
+      function escapeXml(string) {
+        return string.replace(/[<>]/g, function (c) {
+          switch (c) {
+            case '<': return '\u003c';
+            case '>': return '\u003e';
+          }
+        });
+      }
+      function touch_detect() {
+        return 'ontouchstart' in window || 'onmsgesturechange' in window || navigator.msMaxTouchPoints > 0;
+      }
+
+
+      jQuery(document).ready(function () {
+        var pins = {
+          ke: escapeXml('<div class="map-pin red"><span>MO</span></div>'),
+          rw: escapeXml('<div class="map-pin blue"><span>FL</span></div>'),
+          ng: escapeXml('<div class="map-pin purple"><span>OR</span></div>')
+        };
+
+        jQuery('#map').vectorMap({
+          map: 'africa_en',
+          backgroundColor: null,
+          borderColor: "#fff",
+          borderWidth: 1,
+          hoverColor: null,
+          color: '#E57300',
+          selectedColor: '#fff',
+          pins: pins,
+          pinMode: 'content',
+          selectedRegions: ['ke', 'rw', 'ng'],
+          onRegionClick: function (element, code, region) {
+            if (!touch_detect()) {
+              // we're not on a mobile device, handle the click
+              var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+              alert(message);
+            }
+          },
+          onRegionOver: function (element, code, region) {
+            if (touch_detect()) {
+              /// we're not on a mobile device, handle the click
+              var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
+              alert(message);
+            }
+          }
+        });
+
+        jQuery('#kemap').vectorMap({
+          map: 'kenya_en',
+          backgroundColor: null,
+          borderColor: "#fff",
+          borderWidth: 1,
+          hoverColor: null,
+          color: '#E57300',
+          showTooltip: true,
+          enableZoom: true,
+          showLabels: true,
+        });
+      });
+    </script>
+  </body>
+
+</html>
